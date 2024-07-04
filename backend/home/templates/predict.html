@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Predictor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        body, nav {
+            overflow: hidden;
+        }
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: xx-large;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <div class="navbar-item has-dropdown is-hoverable"></div>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-light" href="{% url 'analysis' %}">Analysis</a>
+                    <a class="button is-primary" href="{% url 'predict' %}">Predict</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="center-content">College Rank Prediction</div>
+<div class="section is-medium">
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <form id="college-predictor-form" method="POST">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="label">Select Preferred Course For GATE</label>
+                        <div class="control">
+                            {{ form.preferred_branch }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Enter Exam Rank/Score</label>
+                        <div class="control">
+                            {{ form.score }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Category</label>
+                        <div class="control">
+                            {{ form.category }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Domicile State</label>
+                        <div class="control">
+                            {{ form.state }}
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <input type="submit" class="button is-link" value="Predict">
+                        </div>
+                        <div class="control">
+                            <input type="reset" class="button is-link is-light" value="Reset">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal structure -->
+<div class="modal" id="message-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Message</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            {{ message }}
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-link" id="close-modal">Close</button>
+        </footer>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('message-modal');
+        const closeModal = () => {
+            modal.classList.remove('is-active');
+        };
+
+        // Show modal if there's a message
+        if ("{{ message }}".trim() !== "") {
+            modal.classList.add('is-active');
+        }
+
+        document.querySelector('.delete').addEventListener('click', closeModal);
+        document.getElementById('close-modal').addEventListener('click', closeModal);
+        document.querySelector('.modal-background').addEventListener('click', closeModal);
+    });
+</script>
+</body>
+</html>

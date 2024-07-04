@@ -5,5 +5,4 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('predict/', views.predict, name='predict'),
     path('analysis/', views.analysis, name='analysis'),
-    path('storybook/', views.storybook, name='storybook'),
 ]
