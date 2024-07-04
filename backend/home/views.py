@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .forms import StudentForm
 from .models import Student
+from rest_framework import generics
+from .serializers import StudentSerializer
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -104,3 +106,9 @@ def predict(request):
 def analysis(request):
     return render(request, 'analysis.html')
 
+class StudentListCreateView(generics.ListCreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
