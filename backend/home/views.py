@@ -102,7 +102,7 @@ def predict(request):
                 message = "Sorry! You are not eligible"
     return render(request, 'predict.html', {'form': form, 'message': message})
 
-    
+   
 def analysis(request):
     return render(request, 'analysis.html')
 
