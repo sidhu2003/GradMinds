@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  backend:
+    image: programmer175/gradminds_backend:latest
+    container_name: gradminds_backend
+    ports:
+      - "8000:8000"
